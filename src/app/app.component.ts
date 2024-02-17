@@ -58,7 +58,6 @@ export class AppComponent {
         this.gameForm.valueChanges.subscribe({
             next: val => {
                 const gridTemplate = '1fr '.repeat(val.Cols);
-                console.log(gridTemplate);
                 val.GridTemplate = gridTemplate;
                 this.gameConfig$.next(val);
             },
