@@ -1,6 +1,8 @@
-<div class="connect-four-container">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
+<div
+    *ngIf="gameConfig$ | async as config"
+    class="connect-container"
+    [style.grid-template-columns]="config.GridTemplate">
+    @for (box of UIGrid; track box.id; let idx = $index) {
+        <div class="box" [id]="idx"></div>
+    }
 </div>

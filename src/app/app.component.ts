@@ -48,12 +48,18 @@ export class AppComponent {
             Rows: new FormControl(),
             Cols: new FormControl(),
             Players: new FormControl(),
+            GridTemplate: new FormControl(),
         });
 
         this.gameForm.patchValue(config);
 
         this.gameForm.valueChanges.subscribe({
-            next: val => this.gameConfig$.next(val),
+            next: val => {
+                const gridTemplate = '1fr '.repeat(val.Cols);
+                console.log(gridTemplate);
+                val.GridTemplate = gridTemplate;
+                this.gameConfig$.next(val);
+            },
         });
     }
 }
