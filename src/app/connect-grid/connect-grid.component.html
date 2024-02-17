@@ -3,6 +3,14 @@
     class="connect-container"
     [style.grid-template-columns]="config.GridTemplate">
     @for (box of UIGrid; track box.id; let idx = $index) {
-        <div class="box" [id]="idx"></div>
+        <div
+            class="box"
+            [id]="idx"
+            (click)="handleClick(idx + 1)"
+            [ngClass]="{
+                green: box === 1,
+                purple: box === 2,
+                pink: box === 3
+            }"></div>
     }
 </div>
