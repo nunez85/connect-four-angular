@@ -1,4 +1,5 @@
 .connect-container {
+    margin-bottom: 16px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     background-color: #be6b21;
@@ -18,4 +19,25 @@
     background-color: #abafe0;
     border-radius: 50%;
     margin: auto;
+}
+
+@media screen and (max-width: 992px) {
+    .box {
+        height: 50px;
+        width: 50px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .box {
+        height: 32px;
+        width: 32px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .box {
+        height: 32px;
+        width: 32px;
+    }
 }

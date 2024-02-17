@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -7,15 +8,15 @@ import {
     ReactiveFormsModule,
 } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 import { GridComponent } from './grid/grid.component';
 import { ConnectGridComponent } from './connect-grid/connect-grid.component';
-import { MatCardModule } from '@angular/material/card';
 import { ConnectGameConfig } from '../models/connect-game-config';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
     selector: 'app-root',
@@ -28,6 +29,7 @@ import { BehaviorSubject } from 'rxjs';
         MatInputModule,
         MatSlideToggleModule,
         MatSelectModule,
+        MatDividerModule,
         ReactiveFormsModule,
         ConnectGridComponent,
         GridComponent,

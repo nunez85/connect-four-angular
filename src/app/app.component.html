@@ -1,4 +1,4 @@
-<main style="margin: auto; width: 80%">
+<main style="margin: auto; width: 90%">
     <mat-card>
         <mat-card-header>
             <h2>Connect {{ gameForm.value.Tokens }}!</h2>
@@ -8,7 +8,7 @@
                 [gameConfig$]="gameConfig$.asObservable()"></app-connect-grid>
         </mat-card-content>
         <mat-card-actions>
-            <form [formGroup]="gameForm">
+            <form [formGroup]="gameForm" [style.width]="'100%'">
                 <section class="form-container flex-space-between">
                     <mat-form-field>
                         <mat-label>Rows</mat-label>
@@ -29,7 +29,6 @@
                             <mat-option [value]="6">6</mat-option>
                             <mat-option [value]="7">7</mat-option>
                             <mat-option [value]="8">8</mat-option>
-                            <mat-option [value]="9">9</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field>
