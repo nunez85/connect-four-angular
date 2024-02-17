@@ -1,0 +1,37 @@
+<main style="margin: auto; width: 50%">
+    <mat-card>
+        <mat-card-header>
+            <h2>Connect {{ gameForm.value.tokens }}!</h2>
+        </mat-card-header>
+        <mat-card-content>
+            <app-connect-grid></app-connect-grid>
+        </mat-card-content>
+        <mat-card-actions>
+            <form [formGroup]="gameForm">
+                <section class="form-container flex-space-between">
+                    <mat-form-field>
+                        <mat-label>Rows</mat-label>
+                        <input matInput type="number" formControlName="rows" />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Columns</mat-label>
+                        <input matInput type="number" formControlName="cols" />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Tokens to Win</mat-label>
+                        <input
+                            matInput
+                            type="number"
+                            formControlName="tokens" />
+                    </mat-form-field>
+                </section>
+                <section>
+                    <button mat-raised-button color="primary">Play</button>
+                </section>
+            </form>
+        </mat-card-actions>
+        <!-- <mat-card-footer></mat-card-footer> -->
+    </mat-card>
+</main>
+
+<router-outlet></router-outlet>

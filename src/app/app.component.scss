@@ -1,0 +1,32 @@
+mat-card {
+    padding: 16px;
+}
+
+/* Create four equal columns that floats next to each other */
+
+button {
+    width: 100%;
+}
+
+mat-form-field {
+    width: 33%;
+    padding-right: 16px;
+
+    &:last-child {
+        padding-right: 0;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    mat-form-field {
+        padding: 0;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    mat-form-field {
+        padding: 0;
+        width: 100%;
+    }
+}
