@@ -39,7 +39,12 @@ export class ConnectGridComponent implements OnInit {
         if (newIndex === -1) {
             return;
         }
-        const playerThatWon = this.verticalCheck();
+        let playerThatWon = this.verticalCheck();
+        if (playerThatWon !== -1) {
+            console.log(`Player ${this.currentPlayer}`);
+        }
+
+        playerThatWon = this.horizontalCheck();
         if (playerThatWon !== -1) {
             console.log(`Player ${this.currentPlayer}`);
         }
@@ -87,6 +92,29 @@ export class ConnectGridComponent implements OnInit {
                 } else {
                     indexes = [];
                     count = 0;
+                }
+            }
+        }
+        return -1;
+    }
+
+    horizontalCheck(): number {
+        let count = 0;
+        let indexes = [];
+
+        for (let i = 0; i < this.UIGrid.length; i++) {
+            if (
+                i === this.config.Cols ||
+                this.UIGrid[i] !== this.currentPlayer
+            ) {
+                count = 0;
+                indexes = [];
+            } else {
+                count++;
+                indexes.push(i);
+                if (count === this.config.Tokens) {
+                    console.log(indexes);
+                    return this.currentPlayer;
                 }
             }
         }
