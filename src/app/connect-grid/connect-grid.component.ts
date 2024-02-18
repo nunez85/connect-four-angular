@@ -34,19 +34,25 @@ export class ConnectGridComponent implements OnInit {
     }
 
     handleClick(idx: number): void {
-        const [index, res] = this.makeMove(idx);
-        if (res == 'ok') {
-            this.currentPlayer =
-                (this.currentPlayer + 1) % (this.config.Players + 1);
-            if (this.currentPlayer == 0) {
-                this.currentPlayer = 1;
-            }
+        const newIndex = this.makeMove(idx);
+        // check if win
+        if (newIndex === -1) {
+            return;
         }
-        console.log(res);
+        const playerThatWon = this.verticalCheck();
+        if (playerThatWon !== -1) {
+            console.log(`Player ${this.currentPlayer}`);
+        }
+
+        this.currentPlayer =
+            (this.currentPlayer + 1) % (this.config.Players + 1);
+        if (this.currentPlayer == 0) {
+            this.currentPlayer = 1;
+        }
     }
 
     makeMove(idx: number): any {
-        let col = (idx % this.config.Cols) - 1;
+        let col = (idx - 1) % this.config.Cols;
 
         for (let r = this.gameGrid.length - 1; r >= 0; r--) {
             if (this.gameGrid[r][col] == 0) {
@@ -54,14 +60,36 @@ export class ConnectGridComponent implements OnInit {
                 const newIndex =
                     (r + 1) * this.config.Cols + col - this.config.Cols;
 
-                console.log(`idx => ${newIndex} row => ${r} col => ${col}`);
                 this.UIGrid[newIndex] = this.currentPlayer;
-                console.log(this.UIGrid);
-                console.log(this.gameGrid);
-                return [idx, 'ok'];
+                return newIndex;
             }
         }
+        return -1;
+    }
 
-        return [-1, 'no'];
+    verticalCheck(): number {
+        let count = 0;
+        let indexes = [];
+
+        for (let i = 0; i < this.config.Cols; i++) {
+            for (
+                let step = i;
+                step < this.UIGrid.length;
+                step += this.config.Cols
+            ) {
+                if (this.UIGrid[step] === this.currentPlayer) {
+                    count++;
+                    indexes.push(step);
+                    if (count === this.config.Tokens) {
+                        console.log(indexes);
+                        return this.currentPlayer;
+                    }
+                } else {
+                    indexes = [];
+                    count = 0;
+                }
+            }
+        }
+        return -1;
     }
 }
