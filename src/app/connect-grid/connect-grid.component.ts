@@ -49,6 +49,8 @@ export class ConnectGridComponent implements OnInit {
             console.log(`Player ${this.currentPlayer}`);
         }
 
+        playerThatWon = this.diagonalCheck();
+
         this.currentPlayer =
             (this.currentPlayer + 1) % (this.config.Players + 1);
         if (this.currentPlayer == 0) {
@@ -118,6 +120,32 @@ export class ConnectGridComponent implements OnInit {
                 }
             }
         }
+        return -1;
+    }
+
+    diagonalCheck(): number {
+        console.log(this.gameGrid);
+        let count = 0;
+        let arr = [];
+        for (let x = 0; x < this.UIGrid.length; x += this.config.Cols) {
+            for (
+                let i = x;
+                i < this.config.Cols - (this.config.Tokens - 1);
+                i++
+            ) {
+                for (
+                    let y = i;
+                    y < this.UIGrid.length;
+                    y += this.config.Cols + 1
+                ) {
+                    arr.push(y);
+                }
+                console.log(i);
+                console.log(arr);
+                arr = [];
+            }
+        }
+
         return -1;
     }
 }
