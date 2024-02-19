@@ -3,6 +3,24 @@ import { Observable, of } from 'rxjs';
 import { ConnectGameConfig } from '../../models/connect-game-config';
 import { CommonModule } from '@angular/common';
 
+const GAME_STATUS = {
+    STOP: 1,
+    ONGOING: 2,
+    WIN: 3,
+};
+
+class MoveResult {
+    Player: number;
+    WinningIndices: number[][];
+    Status: number;
+
+    constructor() {
+        this.Player = -1;
+        this.WinningIndices = [];
+        this.Status = GAME_STATUS.ONGOING;
+    }
+}
+
 @Component({
     selector: 'app-connect-grid',
     standalone: true,
@@ -16,7 +34,7 @@ export class ConnectGridComponent implements OnInit {
     currentPlayer = 1;
 
     config!: ConnectGameConfig;
-    gameGrid: number[][] = [];
+    stateGrid: number[][] = [];
     UIGrid: any[] = [];
 
     constructor() {}
@@ -25,33 +43,53 @@ export class ConnectGridComponent implements OnInit {
         this.gameConfig$.subscribe({
             next: config => {
                 this.config = config;
-                this.gameGrid = Array(config.Rows)
-                    .fill(0)
-                    .map(() => Array(config.Cols).fill(0));
-                this.UIGrid = Array(config.Rows * config.Cols).fill(0);
+                this.resetGrids(config.Rows, config.Cols);
             },
         });
     }
 
+    resetGrids(rows: number, cols: number): void {
+        this.stateGrid = Array(rows)
+            .fill(0)
+            .map(() => Array(cols).fill(0));
+        this.UIGrid = Array(rows * cols).fill(0);
+    }
+
     handleClick(idx: number): void {
-        const newIndex = this.makeMove(idx);
-        // check if win
-        if (newIndex === -1) {
+        const [row, col] = this.makeMove(idx);
+        // Move attempted wasn't successful
+        if (row === -1) {
             return;
         }
-        let playerThatWon = this.verticalCheck();
-        if (playerThatWon !== -1) {
+
+        // update ui grid and state grid
+        this.updateState(row, col);
+        this.updateUI(row, col);
+
+        let res = this.verticalCheck(row, col);
+        if (res.length !== 0) {
             console.log(`Player ${this.currentPlayer} wins vertically`);
         }
 
-        playerThatWon = this.horizontalCheck();
-        if (playerThatWon !== -1) {
+        res = this.horizontalCheck(row, col);
+        if (res.length !== 0) {
             console.log(`Player ${this.currentPlayer} wins horizontally`);
         }
 
-        playerThatWon = this.otherDiagonalCheck();
-        if (playerThatWon !== -1) {
+        res = this.diagonalCheck(row, col);
+        if (res.length !== 0) {
             console.log(`Player ${this.currentPlayer} wins diagonally`);
+        }
+
+        res = this.invertedDiagonalCheck(row, col);
+        if (res.length !== 0) {
+            console.log(
+                `Player ${this.currentPlayer} wins diagonally inverted!`
+            );
+        }
+
+        if (this.drawCheck()) {
+            console.log(`DRAW`);
         }
 
         this.currentPlayer =
@@ -61,133 +99,104 @@ export class ConnectGridComponent implements OnInit {
         }
     }
 
-    makeMove(idx: number): any {
+    makeMove(idx: number): number[] {
         let col = (idx - 1) % this.config.Cols;
-
-        for (let r = this.gameGrid.length - 1; r >= 0; r--) {
-            if (this.gameGrid[r][col] == 0) {
-                this.gameGrid[r][col] = this.currentPlayer;
-                const newIndex = this._2dTo1d(r, col);
-
-                this.UIGrid[newIndex] = this.currentPlayer;
-                return newIndex;
+        for (let row = this.stateGrid.length - 1; row >= 0; row--) {
+            if (this.stateGrid[row][col] == 0) {
+                return [row, col];
             }
         }
-        return -1;
+        return [-1, -1];
     }
 
-    _2dTo1d(row: number, col: number): number {
-        return (row + 1) * this.config.Cols + col - this.config.Cols;
+    updateState(row: number, col: number): void {
+        this.stateGrid[row][col] = this.currentPlayer;
     }
 
-    verticalCheck(): number {
-        let count = 0;
-        let indexes = [];
+    updateUI(row: number, col: number) {
+        let _2dTo1dIndex =
+            (row + 1) * this.config.Cols + col - this.config.Cols;
+        console.log(_2dTo1dIndex);
+        this.UIGrid[_2dTo1dIndex] = this.currentPlayer;
+    }
 
-        for (let i = 0; i < this.config.Cols; i++) {
-            for (
-                let step = i;
-                step < this.UIGrid.length;
-                step += this.config.Cols
-            ) {
-                if (this.UIGrid[step] === this.currentPlayer) {
-                    count++;
-                    indexes.push(step);
-                    if (count === this.config.Tokens) {
-                        console.log(indexes);
-                        return this.currentPlayer;
-                    }
-                } else {
-                    indexes = [];
-                    count = 0;
+    verticalCheck(row: number, col: number): number[][] {
+        let winningIndices = [];
+        for (let r = row; r < this.stateGrid.length; r++) {
+            if (this.stateGrid[r][col] === this.currentPlayer) {
+                winningIndices.push([row, col]);
+                if (winningIndices.length === this.config.Tokens) {
+                    return winningIndices;
                 }
-            }
-        }
-        return -1;
-    }
-
-    horizontalCheck(): number {
-        let count = 0;
-        let indexes = [];
-
-        for (let i = 0; i < this.UIGrid.length; i++) {
-            if (
-                i === this.config.Cols ||
-                this.UIGrid[i] !== this.currentPlayer
-            ) {
-                count = 0;
-                indexes = [];
             } else {
-                count++;
-                indexes.push(i);
-                if (count === this.config.Tokens) {
-                    console.log(indexes);
-                    return this.currentPlayer;
-                }
+                winningIndices = [];
             }
         }
-        return -1;
+        return [];
     }
 
-    otherDiagonalCheck(): number {
-        let count = 0;
-        let arr: number[] = [];
-        let i = 0;
-        let j = 0;
-        while (j < this.config.Cols) {
-            let row = 0;
-            while (i < this.config.Rows) {
-                row = i;
-                let col = j;
-                while (row < this.config.Rows && col < this.config.Cols) {
-                    if (this.gameGrid[row][col] === this.currentPlayer) {
-                        arr.push(this._2dTo1d(row, col));
-                        count++;
-                        if (count === this.config.Tokens) {
-                            return this.currentPlayer;
-                        }
-                    } else {
-                        arr = [];
-                        count = 0;
-                    }
-                    row++;
-                    col++;
+    horizontalCheck(row: number, col: number): number[][] {
+        let winningIndices = [];
+        for (let c = 0; c < this.config.Cols; c++) {
+            if (this.stateGrid[row][c] === this.currentPlayer) {
+                winningIndices.push([row, col]);
+                if (winningIndices.length === this.config.Tokens) {
+                    return winningIndices;
                 }
-                if (arr.length > 0) {
-                    console.log(arr);
-                }
-                arr = [];
-                count = 0;
-                i++;
+            } else {
+                winningIndices = [];
             }
-            j++;
         }
-        return -1;
+        return [];
     }
 
-    diagonalCheck(): number {
-        console.log(this.gameGrid);
-        let count = 0;
-        let arr = [];
-        for (let x = 0; x < this.UIGrid.length; x += this.config.Cols) {
-            for (
-                let i = x;
-                i < this.config.Cols - (this.config.Tokens - 1);
-                i++
-            ) {
-                for (
-                    let y = i;
-                    y < this.UIGrid.length;
-                    y += this.config.Cols + 1
-                ) {
-                    arr.push(y);
-                }
-                console.log(i);
-                console.log(arr);
-                arr = [];
-            }
+    diagonalCheck(row: number, col: number): number[][] {
+        let winningIndices = [];
+        while (row > 0 && col > 0) {
+            row--;
+            col--;
         }
+        while (row < this.config.Rows && col < this.config.Cols) {
+            if (this.stateGrid[row][col] === this.currentPlayer) {
+                winningIndices.push([row, col]);
+                if (winningIndices.length === this.config.Tokens) {
+                    return winningIndices;
+                }
+            } else {
+                winningIndices = [];
+            }
+            row++;
+            col++;
+        }
+        return [];
+    }
 
-        return -1;
+    invertedDiagonalCheck(row: number, col: number): number[][] {
+        let winningIndices = [];
+        while (row > 0 && col < this.config.Cols) {
+            row--;
+            col++;
+        }
+        while (row < this.config.Rows && col < this.config.Cols) {
+            this.print(row, col);
+            if (this.stateGrid[row][col] === this.currentPlayer) {
+                winningIndices.push([row, col]);
+                if (winningIndices.length === this.config.Tokens) {
+                    return winningIndices;
+                }
+            } else {
+                winningIndices = [];
+            }
+            row++;
+            col--;
+        }
+        return [];
+    }
+
+    drawCheck(): boolean {
+        return this.UIGrid.every(i => i !== 0);
+    }
+    print(row: number, col: number) {
+        console.log(`(${row}, ${col})`);
     }
 }
