@@ -1,10 +1,19 @@
+@font-face {
+    font-family: 'copyduck';
+    src: url('assets/fonts/copyduck.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
 /* You can add global styles to this file, and also import other style files */
 * {
+    font-family: 'copyduck';
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
-
+h2 {
+    font-family: 'copyduck';
+}
 .flex {
     display: flex;
     flex-direction: row;
@@ -14,6 +23,14 @@
 
 .flex-1 {
     flex: 1;
+}
+
+.flex-2 {
+    flex: 2;
+}
+
+.flex-3 {
+    flex: 3;
 }
 
 .flex-space-between {
@@ -48,4 +65,16 @@
 }
 .grid-template-columns-6 {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.win-snackbar {
+    background: #2196f3;
+}
+
+.mat-mdc-snack-bar-container {
+    &.win-snackbar {
+        --mdc-snackbar-container-color: rgb(79, 69, 69);
+        --mat-snack-bar-button-color: yellow;
+        --mdc-snackbar-supporting-text-color: white;
+    }
 }

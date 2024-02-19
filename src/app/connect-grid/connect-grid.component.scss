@@ -53,3 +53,24 @@
         width: 32px;
     }
 }
+
+.highlight {
+    border: 4px solid yellow;
+}
+
+.game-header {
+    display: flex;
+}
+
+.turn {
+    display: inline-block;
+}
+
+.score {
+    margin-right: 16px;
+}
+
+.scores {
+    display: flex;
+    justify-content: flex-end;
+}

@@ -1,18 +1,27 @@
-<div
-    *ngIf="gameConfig$ | async as config"
-    class="connect-container"
-    [style.grid-template-columns]="config.GridTemplate">
-    @for (box of UIGrid; track box.id; let idx = $index) {
-        <div
-            class="box"
-            [id]="idx"
-            (click)="handleClick(idx + 1)"
-            [ngClass]="{
-                green: box === 1,
-                pink: box === 2,
-                red: box === 3
-            }">
-            {{ idx }}
+<div class="game-container" *ngIf="gameConfig$ | async as config">
+    <div class="game-header flex">
+        <div class="turn flex-1">Turn: {{ players[currentPlayer - 1] }}</div>
+        <div class="scores flex-3">
+            @for (score of scores; track $index) {
+                <span class="score"> {{ players[$index] }}: {{ score }} </span>
+            }
         </div>
-    }
+    </div>
+    <div
+        class="connect-container"
+        id="connect-grid"
+        [style.border-radius]="'3%'"
+        [style.grid-template-columns]="config.GridTemplate">
+        @for (box of UIGrid; track box.id; let idx = $index) {
+            <div
+                class="box"
+                [id]="'cell-' + idx"
+                (click)="handleClick(idx + 1)"
+                [ngClass]="{
+                    green: box === 1,
+                    pink: box === 2,
+                    red: box === 3
+                }"></div>
+        }
+    </div>
 </div>

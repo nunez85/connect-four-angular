@@ -17,6 +17,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { GridComponent } from './grid/grid.component';
 import { ConnectGridComponent } from './connect-grid/connect-grid.component';
 import { ConnectGameConfig } from '../models/connect-game-config';
+import { GAME_STATUS } from './connect-grid/connect-grid.component';
 
 @Component({
     selector: 'app-root',
@@ -41,10 +42,18 @@ import { ConnectGameConfig } from '../models/connect-game-config';
 export class AppComponent {
     gameForm: FormGroup;
     gameConfig$: BehaviorSubject<ConnectGameConfig>;
+    startGame$: BehaviorSubject<boolean>;
+    resetGame$: BehaviorSubject<boolean>;
+    gameStatus: number;
+    started: boolean;
 
     constructor() {
+        this.gameStatus = GAME_STATUS.NOT_STARTED;
+        this.started = false;
         let config = new ConnectGameConfig();
         this.gameConfig$ = new BehaviorSubject<ConnectGameConfig>(config);
+        this.startGame$ = new BehaviorSubject<boolean>(false);
+        this.resetGame$ = new BehaviorSubject<boolean>(false);
         this.gameForm = new FormGroup({
             Tokens: new FormControl(),
             Rows: new FormControl(),
@@ -62,5 +71,15 @@ export class AppComponent {
                 this.gameConfig$.next(val);
             },
         });
+    }
+
+    startGame(): void {
+        this.startGame$.next(true);
+        this.started = true;
+    }
+
+    resetGame(): void {
+        this.resetGame$.next(true);
+        this.started = false;
     }
 }
