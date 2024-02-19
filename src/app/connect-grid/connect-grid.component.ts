@@ -41,15 +41,18 @@ export class ConnectGridComponent implements OnInit {
         }
         let playerThatWon = this.verticalCheck();
         if (playerThatWon !== -1) {
-            console.log(`Player ${this.currentPlayer}`);
+            console.log(`Player ${this.currentPlayer} wins vertically`);
         }
 
         playerThatWon = this.horizontalCheck();
         if (playerThatWon !== -1) {
-            console.log(`Player ${this.currentPlayer}`);
+            console.log(`Player ${this.currentPlayer} wins horizontally`);
         }
 
         playerThatWon = this.otherDiagonalCheck();
+        if (playerThatWon !== -1) {
+            console.log(`Player ${this.currentPlayer} wins diagonally`);
+        }
 
         this.currentPlayer =
             (this.currentPlayer + 1) % (this.config.Players + 1);
@@ -130,30 +133,34 @@ export class ConnectGridComponent implements OnInit {
         let count = 0;
         let arr: number[] = [];
         let i = 0;
-        let row = 0;
-        while (i < this.config.Rows) {
-            row = i;
-            let col = 0;
-            while (row < this.config.Rows && col < this.config.Cols) {
-                if (this.gameGrid[row][col] === this.currentPlayer) {
-                    arr.push(this._2dTo1d(row, col));
-                    count++;
-                    if (count === this.config.Tokens) {
-                        console.log('Player ' + this.currentPlayer + ' wins!!');
+        let j = 0;
+        while (j < this.config.Cols) {
+            let row = 0;
+            while (i < this.config.Rows) {
+                row = i;
+                let col = j;
+                while (row < this.config.Rows && col < this.config.Cols) {
+                    if (this.gameGrid[row][col] === this.currentPlayer) {
+                        arr.push(this._2dTo1d(row, col));
+                        count++;
+                        if (count === this.config.Tokens) {
+                            return this.currentPlayer;
+                        }
+                    } else {
+                        arr = [];
+                        count = 0;
                     }
-                } else {
-                    arr = [];
-                    count = 0;
+                    row++;
+                    col++;
                 }
-                row++;
-                col++;
+                if (arr.length > 0) {
+                    console.log(arr);
+                }
+                arr = [];
+                count = 0;
+                i++;
             }
-            if (arr.length > 0) {
-                console.log(arr);
-            }
-            arr = [];
-            count = 0;
-            i++;
+            j++;
         }
         return -1;
     }
