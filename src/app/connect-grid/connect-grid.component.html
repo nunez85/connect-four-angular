@@ -1,7 +1,7 @@
 <div class="game-container" *ngIf="gameConfig$ | async as config">
     <div class="game-header flex">
         <div class="turn flex-1">Turn: {{ players[currentPlayer - 1] }}</div>
-        <div class="scores flex-3">
+        <div class="scores flex-2">
             @for (score of scores; track $index) {
                 <span class="score"> {{ players[$index] }}: {{ score }} </span>
             }
@@ -20,7 +20,7 @@
                 [ngClass]="{
                     green: box === 1,
                     pink: box === 2,
-                    red: box === 3
+                    mediumPurple: box === 3
                 }"></div>
         }
     </div>

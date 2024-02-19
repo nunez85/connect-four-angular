@@ -29,8 +29,8 @@
     background-color: #57bd92;
 }
 
-.red {
-    background-color: #df4e2f;
+.mediumPurple {
+    background-color: mediumpurple;
 }
 
 @media screen and (max-width: 992px) {
@@ -64,10 +64,15 @@
 
 .turn {
     display: inline-block;
+    margin-left: 4px;
 }
 
 .score {
     margin-right: 16px;
+
+    &:last-of-type {
+        margin-right: 4px;
+    }
 }
 
 .scores {

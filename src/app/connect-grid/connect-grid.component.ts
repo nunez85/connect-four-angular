@@ -32,7 +32,7 @@ export class ConnectGridComponent implements OnInit {
     event: EventEmitter<number> = new EventEmitter<number>();
 
     winningIndices: number[][] = [];
-    players = ['Green', 'Pink', 'Red'];
+    players = ['Green', 'Pink', 'Purple'];
     status = GAME_STATUS.NOT_STARTED;
     currentPlayer = 1;
     scores: number[] = [];
