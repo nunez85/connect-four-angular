@@ -1,0 +1,38 @@
+<mat-card class="business-card">
+    <mat-card-header>
+        <mat-card-title>{{ name }}</mat-card-title>
+        <mat-card-subtitle>{{ title }}</mat-card-subtitle>
+        <img
+            mat-card-lg-image
+            *ngIf="profilePicUrl"
+            [src]="profilePicUrl"
+            [alt]="profilePicAlt" />
+    </mat-card-header>
+    <mat-card-content>
+        <span> {{ summary }}</span>
+    </mat-card-content>
+    <mat-card-footer>
+        <section class="contact-info">
+            <div *ngIf="email">
+                <span
+                    >Email: <span class="soft">{{ email }}</span></span
+                >
+            </div>
+            <div *ngIf="github">
+                <span
+                    >Github: <span class="soft">{{ github }}</span></span
+                >
+            </div>
+            <div *ngIf="linkedin">
+                <span
+                    >LinkedIn: <span class="soft">{{ linkedin }}</span></span
+                >
+            </div>
+            <div *ngIf="instagram">
+                <span
+                    >Instagram: <span class="soft">{{ instagram }}</span></span
+                >
+            </div>
+        </section>
+    </mat-card-footer>
+</mat-card>

@@ -1,0 +1,55 @@
+.game-container {
+    height: 80%;
+}
+
+mat-card {
+    width: 90%;
+    margin: auto;
+    border-radius: 16px;
+    padding: 16px;
+    background-color: var(--card-background);
+}
+
+/* Create four equal columns that floats next to each other */
+
+button {
+    width: 100%;
+    font-size: x-large;
+    height: 50px;
+}
+
+mat-form-field {
+    width: 25%;
+    padding-right: 16px;
+
+    &:last-of-type {
+        padding-right: 0;
+    }
+}
+
+.header {
+    font-size: 3em;
+    margin-bottom: 16px;
+}
+
+.game-form {
+    width: 100%;
+    padding: 8px;
+}
+
+@media screen and (max-width: 992px) {
+    mat-form-field {
+        width: 50%;
+
+        &:nth-of-type(2n) {
+            padding-right: 0;
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    mat-form-field {
+        padding: 0;
+        width: 100%;
+    }
+}

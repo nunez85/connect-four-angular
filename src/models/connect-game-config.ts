@@ -8,8 +8,8 @@ export class ConnectGameConfig {
     constructor() {
         this.Tokens = 4;
         this.Players = 2;
-        this.Rows = 6;
-        this.Cols = 7;
-        this.GridTemplate = '1fr 1fr 1fr 1fr 1fr 1fr 1fr';
+        this.Rows = 5;
+        this.Cols = 6;
+        this.GridTemplate = '1fr 1fr 1fr 1fr 1fr 1fr';
     }
 }

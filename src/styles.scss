@@ -1,9 +1,40 @@
+@use '@angular/material' as mat;
+
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+#main-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+}
+:root {
+    --primary: hsl(28, 70%, 44%);
+    --secondary: #ffffff;
+    --navigation-background: lightcoral;
+    --card-background: darkkhaki;
+    --pink: lightcoral;
+}
+
 @font-face {
     font-family: 'copyduck';
     src: url('assets/fonts/copyduck.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
+
+$copyduck-typography: mat.define-typography-config(
+    $font-family: 'copyduck',
+);
+
+@include mat.card-typography($copyduck-typography);
+
 /* You can add global styles to this file, and also import other style files */
 * {
     font-family: 'copyduck';
@@ -11,9 +42,12 @@
     margin: 0;
     box-sizing: border-box;
 }
-h2 {
-    font-family: 'copyduck';
+
+html,
+body {
+    min-height: 100%;
 }
+
 .flex {
     display: flex;
     flex-direction: row;
@@ -67,6 +101,10 @@ h2 {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
+.margin-16 {
+    margin: 16px;
+}
+
 .win-snackbar {
     background: #2196f3;
 }
@@ -78,4 +116,8 @@ h2 {
         --mdc-snackbar-supporting-text-color: white;
         --mdc-snackbar-supporting-text-font: 'copyduck';
     }
+}
+
+.soft {
+    color: #0000008a;
 }

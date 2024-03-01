@@ -1,0 +1,75 @@
+<section>
+    <mat-card class="game-container">
+        <mat-card-header>
+            <div class="header">Connect {{ gameForm.value.Tokens }}</div>
+        </mat-card-header>
+        <mat-card-content>
+            <app-connect-grid
+                [gameConfig$]="gameConfig$.asObservable()"
+                [startGame$]="startGame$.asObservable()"
+                [resetGame$]="resetGame$.asObservable()"></app-connect-grid>
+        </mat-card-content>
+        <mat-card-actions>
+            <form [formGroup]="gameForm" class="game-form">
+                @if (!started) {
+                    <section class="flex-space-between">
+                        <mat-form-field>
+                            <mat-label>Connect</mat-label>
+                            <mat-select formControlName="Tokens">
+                                <mat-option [value]="4">4</mat-option>
+                                <mat-option [value]="5">5</mat-option>
+                                <mat-option [value]="6">6</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Players</mat-label>
+                            <mat-select formControlName="Players">
+                                <mat-option [value]="2">2</mat-option>
+                                <mat-option [value]="3">3</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Rows</mat-label>
+                            <mat-select formControlName="Rows">
+                                <mat-option [value]="4">4</mat-option>
+                                <mat-option [value]="5">5</mat-option>
+                                <mat-option [value]="6">6</mat-option>
+                                <mat-option [value]="7">7</mat-option>
+                                <mat-option [value]="8">8</mat-option>
+                                <mat-option [value]="9">9</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Columns</mat-label>
+                            <mat-select formControlName="Cols">
+                                <mat-option [value]="4">4</mat-option>
+                                <mat-option [value]="5">5</mat-option>
+                                <mat-option [value]="6">6</mat-option>
+                                <mat-option [value]="7">7</mat-option>
+                                <mat-option [value]="8">8</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </section>
+                    <section>
+                        <button
+                            mat-raised-button
+                            color="primary"
+                            (click)="startGame()">
+                            Play
+                        </button>
+                    </section>
+                } @else {
+                    <section>
+                        <button
+                            mat-raised-button
+                            color="secondary"
+                            (click)="resetGame()">
+                            Reset
+                        </button>
+                    </section>
+                }
+            </form>
+        </mat-card-actions>
+        <!-- <mat-card-footer></mat-card-footer> -->
+    </mat-card>
+</section>
