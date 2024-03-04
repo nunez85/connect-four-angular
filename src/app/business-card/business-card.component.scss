@@ -1,8 +1,17 @@
 .business-card {
-    width: 400px;
+    width: 500px;
+    min-width: 300px;
     min-height: 270px;
     background-color: var(--card-background);
     margin-bottom: 32px;
+
+    &:first-of-type {
+        margin-right: auto;
+    }
+
+    &:last-of-type {
+        margin-left: auto;
+    }
 
     .contact-info {
         padding: 16px;
