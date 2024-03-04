@@ -20,3 +20,9 @@
         justify-content: center;
     }
 }
+
+@media screen and (max-width: 400px) {
+    .footer {
+        padding-top: 200px;
+    }
+}
