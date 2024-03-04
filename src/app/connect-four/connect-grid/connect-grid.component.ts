@@ -19,6 +19,7 @@ export const GAME_STATUS = {
     styleUrl: './connect-grid.component.scss',
 })
 export class ConnectGridComponent implements OnInit {
+    GAME_STATUS = GAME_STATUS;
     @Input()
     gameConfig$!: Observable<ConnectGameConfig>;
 

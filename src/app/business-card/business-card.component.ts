@@ -49,15 +49,13 @@ export class BusinessCardComponent {
     constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
         iconRegistry.addSvgIcon(
             'github',
-            sanitizer.bypassSecurityTrustResourceUrl(
-                'assets/icons/github-mark.svg'
-            )
+            sanitizer.bypassSecurityTrustResourceUrl('assets/icons/github.svg')
         );
 
         iconRegistry.addSvgIcon(
             'instagram',
             sanitizer.bypassSecurityTrustResourceUrl(
-                'assets/icons/instagram-black.svg'
+                'assets/icons/instagram.svg'
             )
         );
     }

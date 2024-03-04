@@ -1,9 +1,16 @@
 <div class="game-container" *ngIf="gameConfig$ | async as config">
-    <div class="flex">
-        <div class="turn flex-1">Turn: {{ players[currentPlayer - 1] }}</div>
+    <div class="flex game-info">
+        <div class="turn flex-1">
+            <span class="soft">Turn: </span
+            ><span [class]="players[currentPlayer - 1].toLowerCase()">{{
+                players[currentPlayer - 1]
+            }}</span>
+        </div>
         <div class="scores flex-2">
             @for (score of scores; track $index) {
-                <span class="score"> {{ players[$index] }}: {{ score }} </span>
+                <span class="score">
+                    <span class="soft">{{ players[$index] }}: </span>{{ score }}
+                </span>
             }
         </div>
     </div>
@@ -14,6 +21,9 @@
         @for (box of UIGrid; track box.id; let idx = $index) {
             <div
                 class="box"
+                [style.cursor]="
+                    status === GAME_STATUS.NOT_STARTED ? 'unset' : 'pointer'
+                "
                 [id]="'cell-' + idx"
                 (click)="handleClick(idx + 1)"
                 [ngClass]="{
