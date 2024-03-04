@@ -1,11 +1,15 @@
-import { CommonModule, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-business-card',
     standalone: true,
-    imports: [MatCardModule, NgIf],
+    imports: [MatCardModule, MatIconModule, HttpClientModule, NgIf],
+    providers: [MatIconRegistry],
     templateUrl: './business-card.component.html',
     styleUrl: './business-card.component.scss',
 })
@@ -41,4 +45,20 @@ export class BusinessCardComponent {
 
     @Input()
     instagram!: string;
+
+    constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+        iconRegistry.addSvgIcon(
+            'github',
+            sanitizer.bypassSecurityTrustResourceUrl(
+                'assets/icons/github-mark.svg'
+            )
+        );
+
+        iconRegistry.addSvgIcon(
+            'instagram',
+            sanitizer.bypassSecurityTrustResourceUrl(
+                'assets/icons/instagram-black.svg'
+            )
+        );
+    }
 }

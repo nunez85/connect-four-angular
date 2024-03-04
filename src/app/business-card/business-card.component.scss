@@ -20,4 +20,25 @@
     img {
         margin-left: auto;
     }
+
+    .contact-info {
+        div {
+            display: flex;
+            align-items: center;
+        }
+        mat-icon {
+            margin-right: 8px;
+        }
+
+        img {
+            margin-top: 8px;
+            margin-right: 8px;
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .business-card {
+        width: 400px;
+    }
 }

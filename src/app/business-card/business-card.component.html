@@ -15,24 +15,24 @@
     <mat-card-footer>
         <section class="contact-info">
             <div *ngIf="email">
-                <span
-                    >Email: <span class="soft">{{ email }}</span></span
-                >
+                <mat-icon>mail</mat-icon>
+                <span class="soft">{{ email }}</span>
             </div>
             <div *ngIf="github">
-                <span
-                    >Github: <span class="soft">{{ github }}</span></span
-                >
+                <mat-icon svgIcon="github"></mat-icon>
+                <span class="soft">{{ github }}</span>
             </div>
             <div *ngIf="linkedin">
-                <span
-                    >LinkedIn: <span class="soft">{{ linkedin }}</span></span
-                >
+                <div>
+                    <img
+                        class="icon"
+                        src="assets/images/linkedin-blue-21.png" />
+                </div>
+                <span class="soft">{{ linkedin }}</span>
             </div>
             <div *ngIf="instagram">
-                <span
-                    >Instagram: <span class="soft">{{ instagram }}</span></span
-                >
+                <mat-icon svgIcon="instagram"></mat-icon>
+                <span class="soft">{{ instagram }}</span>
             </div>
         </section>
     </mat-card-footer>

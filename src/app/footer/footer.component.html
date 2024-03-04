@@ -2,8 +2,7 @@
     <section class="cards-container">
         <app-business-card
             class="flex-1"
-            summary="
-            Hey there! I'm based out of from New Mexico. I love picking up new languages and tinkering with code. It's my thing. Always curious, and I enjoy mixing tech with culture and art."
+            [summary]="isaacSummary"
             profilePicUrl="isaac-profile-pic-smaller.PNG"
             name="Isaac Nunez Garcia"
             title="Software Engineer"
@@ -13,10 +12,10 @@
 
         <app-business-card
             class="flex-1"
-            summary="Hey there! I'm a girl from China who loves traveling, taking photos, and finding designs in everyday objects. Exploring new places and capturing the beauty around me is what keeps me going. Let's go on an adventure!"
+            [summary]="heidiSummary"
             profilePicUrl="heidi-profile-pic-smaller.PNG"
             name="Heidi Han"
-            title="Designer, Photographer"
+            title="Artist, Designer, Illustrator, Photographer"
             email="hidden415@gmail.com"
             instagram="SenseH47"></app-business-card>
     </section>
