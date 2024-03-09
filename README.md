@@ -1,6 +1,7 @@
-# ConnectFourAngular
+# Connect Four Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.3.
+Connect Four Game made with angular.
+The game supports 3 players, resizing of rows, columns, and how many tokens you need to connect in a line to win.
 
 ## Development server
 
